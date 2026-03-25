@@ -1,0 +1,29 @@
+{
+  "name": "redmine-lift-attachments-limit",
+  "version": "0.0.2",
+  "description": "Redmine plugin to configure maximum number of simultaneous file uploads",
+  "main": "assets/javascripts/attachments.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leanderkretschmer/redmine_lift_attachments_limit.git"
+  },
+  "keywords": [
+    "redmine",
+    "plugin",
+    "attachments",
+    "upload",
+    "limit"
+  ],
+  "author": "Leander Kretschmer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leanderkretschmer/redmine_lift_attachments_limit/issues"
+  },
+  "homepage": "https://github.com/leanderkretschmer/redmine_lift_attachments_limit#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

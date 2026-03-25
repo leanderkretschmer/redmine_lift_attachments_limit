@@ -1,30 +1,64 @@
 function addFile(inputEl, file, eagerUpload) {
-    var attachmentsFields = $(inputEl).closest('.attachments_form').find('.attachments_fields');
-    var addAttachment = $(inputEl).closest('.attachments_form').find('.add_attachment');
-    var maxFiles = ($(inputEl).attr('multiple') == 'multiple' ? window.maxFileUploads : 1);
+    const attachmentsFields = inputEl.closest('.attachments_form').querySelector('.attachments_fields');
+    const addAttachment = inputEl.closest('.attachments_form').querySelector('.add_attachment');
+    const maxFiles = (inputEl.hasAttribute('multiple') ? window.maxFileUploads : 1);
 
-    if (attachmentsFields.children().length < maxFiles) {
-        var attachmentId = addFile.nextAttachmentId++;
-        var fileSpan = $('<span>', { id: 'attachments_' + attachmentId });
-        var param = $(inputEl).data('param');
+    if (attachmentsFields.children.length < maxFiles) {
+        const attachmentId = addFile.nextAttachmentId++;
+        const fileSpan = document.createElement('span');
+        fileSpan.id = 'attachments_' + attachmentId;
+        
+        let param = inputEl.dataset.param;
         if (!param) { param = 'attachments'; }
 
-        fileSpan.append(
-            $('<input>', { type: 'text', 'class': 'icon icon-attachment filename readonly', name: param +'[' + attachmentId + '][filename]', readonly: 'readonly' }).val(file.name),
-            $('<input>', { type: 'text', 'class': 'description', name: param + '[' + attachmentId + '][description]', maxlength: 255, placeholder: $(inputEl).data('description-placeholder') }).toggle(!eagerUpload),
-            $('<input>', { type: 'hidden', 'class': 'token', name: param + '[' + attachmentId + '][token]' }),
-            $('<a>&nbsp</a>').attr({ href: "#", 'class': 'icon-only icon-del remove-upload' }).click(removeFile).toggle(!eagerUpload)
-        ).appendTo(attachmentsFields);
+        const filenameInput = document.createElement('input');
+        filenameInput.type = 'text';
+        filenameInput.className = 'icon icon-attachment filename readonly';
+        filenameInput.name = param + '[' + attachmentId + '][filename]';
+        filenameInput.readOnly = true;
+        filenameInput.value = file.name;
 
-        if ($(inputEl).data('description') == 0) {
-            fileSpan.find('input.description').remove();
+        const descriptionInput = document.createElement('input');
+        descriptionInput.type = 'text';
+        descriptionInput.className = 'description';
+        descriptionInput.name = param + '[' + attachmentId + '][description]';
+        descriptionInput.maxLength = 255;
+        descriptionInput.placeholder = inputEl.dataset.descriptionPlaceholder;
+
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.className = 'token';
+        tokenInput.name = param + '[' + attachmentId + '][token]';
+
+        const removeLink = document.createElement('a');
+        removeLink.href = '#';
+        removeLink.className = 'icon-only icon-del remove-upload';
+        removeLink.innerHTML = '&nbsp;';
+        removeLink.addEventListener('click', removeFile);
+
+        fileSpan.appendChild(filenameInput);
+        if (!eagerUpload) {
+            fileSpan.appendChild(descriptionInput);
         }
+        fileSpan.appendChild(tokenInput);
+        if (!eagerUpload) {
+            fileSpan.appendChild(removeLink);
+        }
+
+        if (inputEl.dataset.description === '0') {
+            const descInput = fileSpan.querySelector('input.description');
+            if (descInput) {
+                descInput.remove();
+            }
+        }
+
+        attachmentsFields.appendChild(fileSpan);
 
         if (eagerUpload) {
             ajaxUpload(file, attachmentId, fileSpan, inputEl);
         }
 
-        addAttachment.toggle(attachmentsFields.children().length < maxFiles);
+        addAttachment.style.display = (attachmentsFields.children.length < maxFiles ? '' : 'none');
         return attachmentId;
     }
     return null;

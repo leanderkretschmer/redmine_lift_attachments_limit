@@ -1,14 +1,15 @@
 require 'redmine'
 
-Rails.logger.info 'Starting That Attachments Limit plugin for Redmine'
+Rails.logger.info 'Starting Lift Attachments Limit plugin for Redmine'
 
-Redmine::Plugin.register :that_attachments_limit do
-    name 'That Attachments Limit'
-    author 'Andriy Lesyuk for That Company'
-    author_url 'http://www.andriylesyuk.com/'
+Redmine::Plugin.register :lift_attachments_limit do
+    name 'Lift Attachments Limit'
+    author 'Leander Kretschmer'
+    author_url 'https://github.com/leanderkretschmer'
     description 'Allows to configure how many attachments can be uploaded at once.'
-    url 'https://github.com/thatcompany/that_attachments_limit'
-    version '0.0.1'
+    url 'https://github.com/leanderkretschmer/redmine_lift_attachments_limit'
+    version '0.0.2'
+    requires_redmine :version_or_higher => '6.0.0'
 
     settings :default => { 'attachments_limit' => 10 }, :partial => 'settings/attachments_limit'
 end
