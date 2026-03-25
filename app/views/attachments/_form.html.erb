@@ -9,7 +9,7 @@
 <%= render partial: 'attachments/form', locals: locals %>
 
 <% content_for :header_tags do %>
-  <% maxFileUploads = Setting.plugin_that_attachments_limit['attachments_limit'].to_i %>
+  <% maxFileUploads = Setting.plugin_redmine_lift_attachments_limit['attachments_limit'].to_i %>
   <%= javascript_tag("var maxFileUploads = #{maxFileUploads > 0 ? maxFileUploads : 10};") %>
-  <%= javascript_include_tag('attachments', :plugin => 'that_attachments_limit') %>
+  <%= javascript_include_tag('attachments', :plugin => 'redmine_lift_attachments_limit') %>
 <% end %>

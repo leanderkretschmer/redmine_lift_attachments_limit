@@ -2,7 +2,7 @@ require 'redmine'
 
 Rails.logger.info 'Starting Lift Attachments Limit plugin for Redmine'
 
-Redmine::Plugin.register :lift_attachments_limit do
+Redmine::Plugin.register :redmine_lift_attachments_limit do
     name 'Lift Attachments Limit'
     author 'Leander Kretschmer'
     author_url 'https://github.com/leanderkretschmer'
