@@ -13,3 +13,14 @@ Redmine::Plugin.register :redmine_lift_attachments_limit do
 
     settings :default => { 'attachments_limit' => 10 }, :partial => 'settings/attachments_limit'
 end
+
+# Add JavaScript to the page header for attachment forms
+class LiftAttachmentsLimitHooks < Redmine::Hook::ViewListener
+  def view_layouts_base_html_head(context)
+    max_uploads = Setting.plugin_redmine_lift_attachments_limit['attachments_limit'].to_i
+    max_uploads = 10 if max_uploads <= 0
+    
+    javascript_tag("window.maxFileUploads = #{max_uploads};") +
+    javascript_include_tag('attachments', :plugin => 'redmine_lift_attachments_limit')
+  end
+end
